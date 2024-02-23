@@ -54,7 +54,6 @@ public class RegistrationFormRemoteTests {
         });
 
         step("Заполняем все поля формы", () -> {
-    //        executeJavaScript("$('.fc-primary-button').click()");
             $("#firstName").setValue("Olga");
             $("#lastName").setValue("Savina");
             $("#userEmail").setValue("olga@savina.com");
