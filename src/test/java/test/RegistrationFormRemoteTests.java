@@ -23,7 +23,7 @@ public class RegistrationFormRemoteTests {
   //      Configuration.browser = "chrome";
         Configuration.timeout = 10000;
    //     Configuration.holdBrowserOpen = true;
-  //      Configuration.pageLoadStrategy = "eager";
+//        Configuration.pageLoadStrategy = "eager";
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -49,6 +49,7 @@ public class RegistrationFormRemoteTests {
     void fillFormTest() {
         step("Открываем страницу с формой", () -> {
             open("/automation-practice-form");
+            executeJavaScript("$('.fc-cta-consent').click()");
             executeJavaScript("$('#fixedban').remove()");
             executeJavaScript("$('footer').remove()");
         });
