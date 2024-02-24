@@ -1,6 +1,7 @@
 package test;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -18,13 +19,13 @@ public class RegistrationFormRemoteTests {
 
     @BeforeAll
     static void beforeAll() {
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
+        Configuration.browserVersion = System.getProperty("browserVersion", "100.0");
+     //   Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-  //      Configuration.browser = "chrome";
-        Configuration.timeout = 10000;
-   //     Configuration.holdBrowserOpen = true;
-//        Configuration.pageLoadStrategy = "eager";
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
                 "enableVNC", true,
@@ -35,12 +36,13 @@ public class RegistrationFormRemoteTests {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
-   @AfterEach
-   void addAttachments() {
+    @AfterEach
+    void addAttachments() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
+        Selenide.closeWebDriver();
     }
 
     @Test
